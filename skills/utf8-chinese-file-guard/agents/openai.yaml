@@ -1,0 +1,4 @@
+interface:
+  display_name: "UTF-8 Chinese File Guard"
+  short_description: "安全处理中文 UTF-8 文件修改、乱码修复与批量替换"
+  default_prompt: "Use $utf8-chinese-file-guard to safely edit Chinese UTF-8 source files, docs, proto files, comments, or configs, and avoid garbled text during batch replacements or PowerShell 5.1 write-backs."

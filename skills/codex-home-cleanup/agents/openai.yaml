@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Home Cleanup"
+  short_description: "Audit and prune a bloated .codex directory safely."
+  default_prompt: "Use $codex-home-cleanup to audit and prune my .codex directory while keeping only recent sessions and logs."

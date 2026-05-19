@@ -1,0 +1,4 @@
+interface:
+  display_name: "中文提交规范"
+  short_description: "生成按文件分组的中文 Git 提交信息并执行 commit/push"
+  default_prompt: "请检查当前仓库变更，按文件分组生成详细的中文 Git 提交信息，并执行 git commit 与 git push。"

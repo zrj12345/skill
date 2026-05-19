@@ -1,0 +1,4 @@
+interface:
+  display_name: "Session Auto Resume"
+  short_description: "Watch logs and auto-resume Codex runs."
+  default_prompt: "Start or stop log-based auto-resume for a Codex session."
