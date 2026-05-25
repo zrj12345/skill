@@ -1,0 +1,4 @@
+interface:
+  display_name: "IoT Site Detail Integration"
+  short_description: "站点详情页前后端接口联调性能优化与浏览器回归验证流程"
+  default_prompt: "按站点详情页对接流程，审查前后端接口、重复请求、接口耗时、DB mock 隔离和浏览器回归，并输出修复与验证结果。"

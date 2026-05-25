@@ -12,6 +12,7 @@ This repository collects a set of Codex skills and their supporting files.
 - `skills/session-auto-resume`
 - `skills/git-commit-cn`
 - `skills/codex-home-cleanup`
+- `skills/iot-site-detail-integration`
 
 ## Notes
 
