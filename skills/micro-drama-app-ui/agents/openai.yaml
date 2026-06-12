@@ -1,0 +1,4 @@
+interface:
+  display_name: "Micro Drama App UI"
+  short_description: "Design project-specific short drama app UI from confirmed PRD and architecture docs"
+  default_prompt: "Use $micro-drama-app-ui to design or generate a micro-drama app screen from docs/prd, docs/architecture, and docs/原始需求, while ignoring root-level historical markdown drafts."

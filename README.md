@@ -13,6 +13,7 @@ This repository collects a set of Codex skills and their supporting files.
 - `skills/git-commit-cn`
 - `skills/codex-home-cleanup`
 - `skills/iot-site-detail-integration`
+- `skills/micro-drama-app-ui`
 
 ## Notes
 
