@@ -136,6 +136,11 @@ In this project, `compact` is not a loose preference. Treat it as a hard product
 ### 1. Entertainment First
 
 - Use a dark or warm-dark base.
+- Every app screen background must carry the same short-drama cinema feel: deep wine-brown / cinema-black base, subtle gold-red ambient light, restrained vignette, and content-first hierarchy.
+- Every mobile screen prototype must include a perceptible but restrained cinema background effect. This is mandatory, not optional decoration.
+- Low-frequency ambient background flow should be used to strengthen entertainment atmosphere, but it must stay behind content, preserve readability, avoid showy motion, and respect reduced-motion settings.
+- The background effect must be screen-level, not only a local card effect: deep wine / cinema-black base, gold-red ambient light, subtle vignette, and slow background-layer movement.
+- Utility, settings, feedback, history, legal, and form pages still need this cinema background effect; low-attraction page content does not mean the background may fall back to plain system black or workbench dark.
 - Build atmosphere with tonal depth, glow, poster-like accents, and cinematic hierarchy.
 - Let the screen feel tied to video, episodes, and drama consumption.
 - The page must feel like the user is still inside a drama product, not like they switched into a utility settings shell.
@@ -233,12 +238,28 @@ Text strategy summary:
 - long plot-synopsis style secondary copy should be reduced or removed unless the source pattern clearly uses it
 - this is a hard standard and text choices may only converge further in this direction, never away from it
 
+Mobile label copy rules:
+
+- Treat every visible label, title, tab, row entry, button, link, badge, and helper line as final production English UI copy unless the PRD explicitly specifies another language.
+- Labels and navigation entries should normally be 1-2 words. Action buttons should normally be 1-3 words and must not exceed 4 words unless the PRD text is legally required.
+- Use simple, common, precise words. Choose the shortest standard product term that keeps the meaning clear.
+- Use verbs for actions and CTAs: `Sign in`, `Top-up`, `Unlock`, `Watch`, `Continue`, `Add`, `Save`.
+- Use nouns or short noun phrases for destinations and states: `VIP`, `Wallet`, `My List`, `Settings`, `History`.
+- Drop articles, filler, and ceremony: prefer `Import Files` over `Import a File`, `Sign in` over `Sign in to continue watching and keep your account synced`.
+- Do not write labels that explain the interface, product strategy, emotional intent, or user journey. If context is visually obvious, delete the helper copy.
+- Keep labels and short helper copy to one line on mobile whenever possible. If copy wraps, shorten it before resizing the UI.
+- Keep casing consistent with the surface: action buttons and links use sentence case; destination/navigation labels may use title case when matching the established app pattern.
+- Links must name the destination or immediate outcome in no more than 4 words, for example `Service Agreement`, `Privacy Agreement`, `View details`.
+- Tooltips are rarely needed in mobile previews. If a tooltip-like hint is required, keep the label to 1-3 words and the explanation to one short sentence.
+- Reject explanatory drafts such as `Unlock premium short-form drama`, `Keep your account synced`, `Explore all your benefits`, `Tap here to continue`, and `Please click Next` unless the PRD or legal copy requires them.
+
 Shapes:
 
 - rounded cards and pill controls are part of this product's shipped-app language
 - corners must feel polished and consumer-product ready
 - avoid boxy admin-panel geometry
 - avoid overusing nested cards and decorative sub-blocks inside already clear modules
+- compact secondary entry groups must not become plain workbench dividers; keep a dark cinema base, subtle entertainment glow, and semantic multi-color icons even when the layout is row-based
 
 Card layout summary:
 
@@ -246,6 +267,8 @@ Card layout summary:
 - VIP and wallet are primary cards and must carry the strongest visual weight
 - row-based entry areas must stay row-based when the product pattern is list-first
 - reduce unnecessary nested panels, chips, and sub-cards
+- do not create hierarchy by wrapping a large card around several smaller cards; use single-layer entry rails, list rows, dividers, or icon+label groups for secondary actions
+- do not add large outer panels around brand areas, form fields, settings lists, history entry groups, or upload areas just to create atmosphere; cinema feel must come from the page background, module material, and single-layer separation
 - spacing between cards must be compact enough to feel production-ready
 - card height must be controlled so the page feels dense and efficient rather than airy
 - on home or discovery pages, banner or hero areas must stay subordinate to the surrounding consumption structure
@@ -262,23 +285,48 @@ Color strategy summary:
 
 - use a warm dark base to maintain entertainment atmosphere
 - bias specifically toward a deeper champagne-tinted dark cinema base instead of a neutral dark base
+- apply the cinema base to the whole screen, not only to isolated modules; the background must not read as a plain utility workbench, neutral system black, or admin surface
+- every screen must use the project cinema background recipe: deep wine / cinema-black base, gold-red ambient light, restrained vignette, and slow background-layer flow
 - let gold / amber own VIP and wallet emphasis
 - use accent colors sparingly and functionally
 - keep utility rows darker and calmer than monetization modules
 - avoid decorative rainbow accents or excessive color variety
 - color must support hierarchy first, style second
+- Glow-on-Dark Wallet and Reward Cards (Anti-Whiteout Rule): In high-value scenarios such as sign-in rewards and wallet balances, avoid large solid-light (white or bright yellow) card backgrounds which break the dark cinema base. Use a "warm dark base + gold/amber/pink glowing borders + high-contrast text" formula to draw clicks without ruining the theater environment.
 - this is a hard standard and color choices may only converge further in this direction, never away from it
 
 Visual effects strategy summary:
 
 - use subtle glow, soft gradients, and restrained contrast instead of heavy decoration
 - visual effects must support premium feel without looking like a concept render
+- animated background effects, when used, must be slow ambient light movement only; never animate content readability, transaction rows, primary CTAs, or essential controls
+- screen-level cinema background flow is required for prototypes, but it must remain low-frequency and background-only
+- if reduced motion is enabled, the animation stops while the static cinema base, gold-red ambient light, and vignette remain visible
+- reject obvious scan waves, concentric ripples, particle rain, neon flashing, broad white light bands, or any background highlight that lowers text contrast
 - avoid effects that make the screen look blurry, noisy, or overbuilt
 - keep shadows soft and supportive, not theatrical
 - use visual polish to reinforce a shipped-app feel, not to compensate for weak layout
 - every visual effect must strictly meet production-release standards and must not look like temporary styling layered onto unfinished product structure
 - mobile preview pages should not rely on mouse-hover effects for polish
+- Mobile-Native Tap Resistance Feedback: Never rely on mouse-hover effects for click targets. All buttons, grids, and check-in tiles must support active pressing feedback (such as scaling down to 0.96-0.98 with 5-10% opacity dimming) to guide developers implementing GestureDetector or InkWell in Flutter.
 - this is a hard standard and visual-effect choices may only converge further in this direction, never away from it
+
+Asset strategy summary:
+
+- shared prototype icons, illustrations, and background images must live under `docs/design-review/ui-prototype/assets/` with source and license notes
+- do not scatter duplicate page-local assets across page family directories
+- do not hotlink external images in prototype HTML; download approved network resources into the shared asset directory first
+- when a UI needs vivid entertainment or coin/reward texture, prefer licensed PNG / WebP network resources with strong image quality instead of ad-hoc handmade low-fidelity icons or plain line SVGs
+- icon assets must feel like mature short-drama app assets, not mobile game loot items; allow brightness, soft 3D volume, and cinema polish, but avoid excessive gems, spark bursts, exploding gift boxes, trophy-drop effects, and cartoon game props
+- 3D Tangible Asset Representation: Any asset-related icons (coins, chests, badges) must feature prominent volume and metallic depth. When drawn with CSS, employ multi-layered radial gradients, inset shadows, and sliced golden highlight accents. Avoid flat, solid shapes or cheap cartoonish game-loot textures.
+- Treat icon creation as a small visual asset system, not as isolated emoji replacement. Before creating or swapping icons, define semantics, use cases, hierarchy, size range, static/animated needs, reuse locations, and source/license path.
+- Icon creation must include external resource research before production: search mature app references, licensed icon libraries, and high-quality PNG/WebP resources; capture useful semantics, material direction, color behavior, and license constraints before deciding whether to adopt, adapt, or generate.
+- Decision order is mandatory: if a quality-approved, clearly licensed PNG/WebP asset can be obtained from the web, download it into the shared assets directory and use it instead of making a new one. Generate or hand-create icons only when no suitable licensed resource exists, licensing blocks use, or the project requires a custom coherent set.
+- Icon families must be designed and reviewed as a set. A wallet/reward/consumption/top-up set must share light direction, perspective, material, saturation, contour sharpness, shadow style, and cinema polish.
+- Generate or collect multiple candidates, then reject candidates that read as low-resolution, flat SVG, plain emoji, generic office UI, or game-loot props. Do not accept the first attractive output if it misses the product tone.
+- Verify icons at mobile UI sizes such as 20px, 24px, and 28px against the actual dark cinema background. Large preview quality is not enough.
+- Preserve source sheets or originals, cropped transparent PNG/WebP files, source/license notes, and intended usage. Flutter must reuse the same asset keys instead of substituting similar icons later.
+- content-list pages such as playback history, favorites, recommendations, and My List must use real poster-like image assets; do not fake drama posters with abstract gradients, blobs, or CSS-only placeholders
 
 Formal product execution rule:
 
