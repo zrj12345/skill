@@ -1,6 +1,7 @@
 # 原文索引（1104 篇全库）
 
-所有条目格式为 `[id=N]`，用 `python scripts/kb_search.py --id N --all` 读取全文。
+所有条目格式为 `[id=N]`，用 `python scripts/kb_search.py --id N --all` 读取全文，用 `--id N --path` 拿本地 md/html 路径与原文链接。
+本文件只按主题列高相关文档；**全量 1104 篇的 id↔标题↔原文链接对照见 `id-map.tsv`**，规则见 `09-id-lookup.md`。
 也可用 `kb_search.py --query "关键词" --cat 分类` 做全文检索。
 
 

@@ -66,11 +66,14 @@ python scripts/keyword_scorecard.py --demo
 python scripts/kb_search.py --query "KGR 阈值 搜索量" --limit 8
 python scripts/kb_search.py --title "找词" --cat 哥飞小课堂
 python scripts/kb_search.py --id 1037 --all
+python scripts/kb_search.py --id 17 --path
 python scripts/kb_search.py --list-cats
 python scripts/kb_search.py --query "SERP" --json
 ```
 
 默认只按目录名 `出海seo资源分享V1.0` 在工作区及其上级查找，不含任何绝对路径；需要指定别处时用 `--kb <目录>` 或环境变量 `SEO_KB_ROOT`。资料库移动后先确认能检索到，再回答涉及原文的问题。
+
+**`[id=N]` 的回溯**：id 是 `search-index.json` 数组下标（0~1103）。用户问「id=17 是哪篇」或要引用出处时，用 `--id N --all` 读全文、`--id N --path` 拿本地 md/html 相对路径与原文链接；不跑脚本时查 `references/id-map.tsv`（全量 1104 行：id / 分类 / 标题 / 原文链接）。规则详见 `references/09-id-lookup.md`。回答时把标题和原文链接一并给出，不要只回一个编号。
 
 ## 回答规范
 
@@ -83,4 +86,4 @@ python scripts/kb_search.py --query "SERP" --json
 
 ## 参考资料
 
-`references/01-concepts.md` 概念与排名机制 · `02-sourcing.md` 找词与热词 · `03-evaluation.md` 关键词判断与建站决策 · `04-building.md` 从词到站 · `05-ops-money.md` 运营与变现 · `06-cases-tools.md` 案例、避坑、工具 · `07-playbooks.md` 总纲、公式、阈值、模板 · `08-source-index.md` 主题→原文 id 索引与策略演进时间线。
+`references/01-concepts.md` 概念与排名机制 · `02-sourcing.md` 找词与热词 · `03-evaluation.md` 关键词判断与建站决策 · `04-building.md` 从词到站 · `05-ops-money.md` 运营与变现 · `06-cases-tools.md` 案例、避坑、工具 · `07-playbooks.md` 总纲、公式、阈值、模板 · `08-source-index.md` 主题→原文 id 索引与策略演进时间线 · `09-id-lookup.md` id 回溯说明 · `id-map.tsv` 全量 id→标题→原文链接对照表。

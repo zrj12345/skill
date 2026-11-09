@@ -63,6 +63,16 @@ def load(kb):
     return docs
 
 
+def doc_paths(d):
+    """Return (md, html) paths relative to the workspace root."""
+    name = os.path.splitext(d.get("h", ""))[0]
+    folder = d.get("f", "")
+    cat = d.get("d", "")
+    parts = [KB_DIRNAME] + ([cat] if cat else []) + [folder]
+    return (os.path.join(*parts, name + ".md"),
+            os.path.join(*parts, name + ".html"))
+
+
 def snippets(text, terms, width=150, maxn=3):
     low = text.lower()
     out, seen = [], []
@@ -94,6 +104,7 @@ def main():
     ap.add_argument("--limit", type=int, default=8)
     ap.add_argument("--list-cats", action="store_true")
     ap.add_argument("--all", action="store_true", help="with --id, do not truncate")
+    ap.add_argument("--path", action="store_true", help="with --id, print local md/html paths and the original URL instead of the full text")
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
     docs = load(a.kb)
@@ -108,6 +119,17 @@ def main():
         if not (0 <= a.id < len(docs)):
             sys.exit("id out of range 0..%d" % (len(docs) - 1))
         d = docs[a.id]
+        if a.path:
+            md, html = doc_paths(d)
+            print("id=%d | %s | %s" % (d["id"], d.get("d", ""), d["n"]))
+            print("md   : %s" % md)
+            print("html : %s" % html)
+            print("paths are relative to the workspace root; open them directly, or run:")
+            print("  python kb_search.py --id %d --all   (read full text)" % d["id"])
+            m = re.search(r"原文链接[：:]\s*(\S+)", d["text"])
+            if m:
+                print("原文 : %s" % m.group(1))
+            return
         print("id=%d | %s | %s\n%s\n" % (d["id"], d.get("d", ""), d["n"], "-" * 60))
         print(d["text"] if a.all else d["text"][:30000])
         return
