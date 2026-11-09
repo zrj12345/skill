@@ -15,6 +15,7 @@ This repository collects a set of Codex skills and their supporting files.
 - `skills/iot-site-detail-integration`
 - `skills/micro-drama-app-ui`
 
+- `skills/chuhai-seo-keyword`
 ## Notes
 
 - `skills/yuque/.env` is intentionally not committed.
