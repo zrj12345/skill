@@ -5,6 +5,8 @@ Usage:
   python kb_search.py --query "KD 判断 搜索量" --limit 8
   python kb_search.py --title "找词" --cat 哥飞小课堂
   python kb_search.py --id 1037
+  python kb_search.py --ids 23,47,277          # batch id -> title + original URL for citation
+  python kb_search.py --id 17 --path
   python kb_search.py --list-cats
   python kb_search.py --query "SERP 内页" --json
 
@@ -12,6 +14,9 @@ The knowledge base is addressed by its folder name only: 出海seo资源分享V1
 (no absolute paths). The script searches the current directory and its parents,
 plus the script's own parent directories. Override with --kb <dir> or the
 SEO_KB_ROOT environment variable. The folder must contain search-index.json.
+
+When replying, always pair any [id=N] with the original document title;
+use --ids to fetch titles for a batch of citations in one call.
 """
 import argparse, json, os, re, sys
 
@@ -73,6 +78,18 @@ def doc_paths(d):
             os.path.join(*parts, name + ".html"))
 
 
+def source_url(d):
+    """Return the original Web.Cafe URL embedded at the top of the document."""
+    m = re.search(r"原文链接[：:]\s*(\S+)", d.get("text", ""))
+    return m.group(1) if m else ""
+
+
+def citation(d):
+    """One-line citation: [id=N] 《title》 — original URL."""
+    url = source_url(d)
+    return "[id=%d] 《%s》%s" % (d["id"], d["n"], (" — " + url) if url else "")
+
+
 def snippets(text, terms, width=150, maxn=3):
     low = text.lower()
     out, seen = [], []
@@ -101,6 +118,7 @@ def main():
     ap.add_argument("--title", help="title-only query")
     ap.add_argument("--cat", help="filter by category")
     ap.add_argument("--id", type=int, help="print full text of one document id")
+    ap.add_argument("--ids", help="comma separated ids; print citation lines with titles")
     ap.add_argument("--limit", type=int, default=8)
     ap.add_argument("--list-cats", action="store_true")
     ap.add_argument("--all", action="store_true", help="with --id, do not truncate")
@@ -108,6 +126,22 @@ def main():
     ap.add_argument("--json", action="store_true")
     a = ap.parse_args()
     docs = load(a.kb)
+
+    if a.ids:
+        for raw in re.split(r"[,\s]+", a.ids.strip()):
+            if not raw:
+                continue
+            token = re.sub(r"^id=", "", raw.strip(), flags=re.I)
+            try:
+                n = int(token)
+            except ValueError:
+                print("# skip invalid id: %s" % raw)
+                continue
+            if not (0 <= n < len(docs)):
+                print("# skip out-of-range id: %d" % n)
+                continue
+            print(citation(docs[n]))
+        return
 
     if a.list_cats:
         from collections import Counter
@@ -121,22 +155,20 @@ def main():
         d = docs[a.id]
         if a.path:
             md, html = doc_paths(d)
-            print("id=%d | %s | %s" % (d["id"], d.get("d", ""), d["n"]))
+            print(citation(d))
+            print("分类 : %s" % d.get("d", ""))
             print("md   : %s" % md)
             print("html : %s" % html)
             print("paths are relative to the workspace root; open them directly, or run:")
             print("  python kb_search.py --id %d --all   (read full text)" % d["id"])
-            m = re.search(r"原文链接[：:]\s*(\S+)", d["text"])
-            if m:
-                print("原文 : %s" % m.group(1))
             return
-        print("id=%d | %s | %s\n%s\n" % (d["id"], d.get("d", ""), d["n"], "-" * 60))
+        print(citation(d) + "\n" + "-" * 60 + "\n")
         print(d["text"] if a.all else d["text"][:30000])
         return
 
     terms = [t for t in re.split(r"\s+", (a.query or a.title or "").strip()) if t]
     if not terms:
-        ap.error("provide --query, --title, --id or --list-cats")
+        ap.error("provide --query, --title, --id, --ids or --list-cats")
 
     rows = []
     for d in docs:
@@ -161,13 +193,14 @@ def main():
 
     if a.json:
         print(json.dumps([{"id": d["id"], "category": d.get("d"), "title": d["n"],
-                           "score": round(s, 1), "snippets": snippets(d["text"], terms)}
+                           "url": source_url(d), "score": round(s, 1),
+                           "snippets": snippets(d["text"], terms)}
                           for s, d, h in rows[:a.limit]], ensure_ascii=False, indent=2))
         return
     print("Found %d docs, showing top %d for: %s\n" % (len(rows), min(a.limit, len(rows)), " ".join(terms)))
     for s, d, h in rows[:a.limit]:
         print("=" * 78)
-        print("[id=%d] %s | %s | score=%.1f | %d chars" % (d["id"], d.get("d", ""), d["n"], s, len(d["text"])))
+        print(citation(d) + " | score=%.1f | %d chars" % (s, len(d["text"])))
         for sn in snippets(d["text"], terms):
             print("   ... %s ..." % sn)
         print("   read full: python kb_search.py --id %d --all" % d["id"])

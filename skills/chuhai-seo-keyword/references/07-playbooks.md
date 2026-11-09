@@ -105,7 +105,7 @@ serp_dr_max, official_present, search_intent, monetization, verdict, evidence_co
 【流量与收入粗估】保守/中性/乐观三档，注明是估算
 【风险】口径坑、观点冲突、需要人工复核的点
 【下一步】3~5 条可直接执行的动作（含工具与观察周期）
-【依据】[id=N] 文档标题；可用 kb_search.py --id N 查原文
+【依据】[id=N] 《原文标题》 — 原文链接；逐条列出，禁止裸编号。批量先跑 `python kb_search.py --ids N,N,N` 取标题与链接
 ```
 
 ---

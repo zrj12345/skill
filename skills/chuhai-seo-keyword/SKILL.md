@@ -67,16 +67,18 @@ python scripts/kb_search.py --query "KGR 阈值 搜索量" --limit 8
 python scripts/kb_search.py --title "找词" --cat 哥飞小课堂
 python scripts/kb_search.py --id 1037 --all
 python scripts/kb_search.py --id 17 --path
+python scripts/kb_search.py --ids 23,47,277
 python scripts/kb_search.py --list-cats
 python scripts/kb_search.py --query "SERP" --json
 ```
 
 默认只按目录名 `出海seo资源分享V1.0` 在工作区及其上级查找，不含任何绝对路径；需要指定别处时用 `--kb <目录>` 或环境变量 `SEO_KB_ROOT`。资料库移动后先确认能检索到，再回答涉及原文的问题。
 
-**`[id=N]` 的回溯**：id 是 `search-index.json` 数组下标（0~1103）。用户问「id=17 是哪篇」或要引用出处时，用 `--id N --all` 读全文、`--id N --path` 拿本地 md/html 相对路径与原文链接；不跑脚本时查 `references/id-map.tsv`（全量 1104 行：id / 分类 / 标题 / 原文链接）。规则详见 `references/09-id-lookup.md`。回答时把标题和原文链接一并给出，不要只回一个编号。
+**`[id=N]` 的回溯**：id 是 `search-index.json` 数组下标（0~1103）。用 `--id N --all` 读全文、`--id N --path` 拿本地 md/html 相对路径、`--ids N,N,N` 批量拿可直接粘贴的引用行（含标题与原文链接）；不跑脚本时查 `references/id-map.tsv`（全量 1104 行：id / 分类 / 标题 / 原文链接）。规则详见 `references/09-id-lookup.md`。**回答中每处 `[id=N]` 都必须带原文标题和链接**，见「回答规范」。
 
 ## 回答规范
 
+- **引用必带原文标题（强制）**：凡在回复中出现 `[id=N]`，必须同时给出该文档的原文标题（《》包裹）和原文链接，格式为 `[id=23] 《20250122 再次系统的聊聊如何判断一个关键词是否能做 | Web.Cafe》 — https://...`。禁止只丢一个裸编号，也不许编造标题。批量引用时先跑 `python scripts/kb_search.py --ids 23,47,277` 一次取回全部标题与链接，或查 `references/id-map.tsv`；`--query` / `--id` / `--json` 的输出本身也已自动带标题。
 - 用中文、结论先行、少废话；能给方法就不给科普。
 - 每个数字阈值标注来源 id 与时间口径；资料内部冲突时并列说明并给出按站点阶段的选择建议。
 - 用户只给关键词、没给数据时：先做定性判断（品牌词/趋势/意图），再列出「需要你补充的字段清单」，不要编造搜索量和 KD。
